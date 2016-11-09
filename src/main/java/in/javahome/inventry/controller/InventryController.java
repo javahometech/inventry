@@ -14,7 +14,7 @@ public class InventryController {
 	@Autowired
 	private IInventryService stdservice;
 
-	@RequestMapping(value = "/student", method = RequestMethod.GET)
+	@RequestMapping(value = "/item", method = RequestMethod.POST)
 	public String addItem(@RequestBody Item item) {
 		return stdservice.addItem(item);
 	}
