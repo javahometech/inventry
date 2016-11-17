@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import in.javahome.inventry.entity.Item;
 
 @Repository
-public interface InventryRepository extends JpaRepository<Item, Integer>{
-
+public interface InventryRepository extends JpaRepository<Item, Integer> {
+	public Item findByItemName(String itemName);
 }

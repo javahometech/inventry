@@ -9,14 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="ITEMS")
+@XmlRootElement
 public class Item implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer itemId;
 	@Column(name="ITEM_NAME")
+	@NotEmpty(message="Item Name is mandatory")
+	@Length(min=3,message="Item name must contain minimum 3 characters")
 	private String itemName;
 	@Column(name="ITEM_COUNT")
 	private Integer itemCount;
