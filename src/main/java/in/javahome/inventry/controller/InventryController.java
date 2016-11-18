@@ -26,6 +26,7 @@ public class InventryController {
 	public BaseResponse addItem(@Valid @RequestBody Item item, BindingResult result) {
 		if (result.hasErrors()) {
 			// send error message to the client
+			System.out.println("raju.s");
 			BaseResponse resp = new BaseResponse();
 			resp.setStatus("Error");
 			resp.setCode(HttpStatus.BAD_REQUEST.value());
