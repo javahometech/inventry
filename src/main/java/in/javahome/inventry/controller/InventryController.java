@@ -1,10 +1,13 @@
 package in.javahome.inventry.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +29,15 @@ public class InventryController {
 	public BaseResponse addItem(@Valid @RequestBody Item item, BindingResult result) {
 		if (result.hasErrors()) {
 			// send error message to the client
+			List<FieldError> fieldErrors = result.getFieldErrors();
+			StringBuilder errorMsgs = new StringBuilder();
+			for (FieldError fieldError : fieldErrors) {
+				errorMsgs.append(fieldError.getDefaultMessage()+" \t");
+			}
 			BaseResponse resp = new BaseResponse();
 			resp.setStatus("Error");
 			resp.setCode(HttpStatus.BAD_REQUEST.value());
+			resp.setErrMessage(errorMsgs.toString());
 			return resp;
 		}
 		return stdservice.addItem(item);
