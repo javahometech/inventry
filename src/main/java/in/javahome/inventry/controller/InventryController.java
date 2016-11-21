@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import in.javahome.inventry.model.ItemModel;
+import in.javahome.inventry.entity.Item;
 import in.javahome.inventry.response.BaseResponse;
 import in.javahome.inventry.response.ListResponse;
 import in.javahome.inventry.service.IInventryService;
@@ -26,8 +26,11 @@ public class InventryController {
 	private IInventryService stdservice;
 
 	@RequestMapping(value = "/item", method = RequestMethod.POST)
-	public BaseResponse addItem(@Valid @RequestBody ItemModel item, BindingResult result) {
+	public BaseResponse addItem(@Valid @RequestBody Item item, BindingResult result) {
 		if (result.hasErrors()) {
+
+			// send error message to the client
+			System.out.println("raju.s");
 
 			// send error message to the client
 			System.out.println("raju.s");
@@ -36,6 +39,7 @@ public class InventryController {
 			for (FieldError fieldError : fieldErrors) {
 				errorMsgs.append(fieldError.getDefaultMessage()+" \t");
 			}
+
 
 			BaseResponse resp = new BaseResponse();
 			resp.setStatus("Error");
