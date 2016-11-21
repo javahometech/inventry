@@ -33,6 +33,7 @@ public class InventryController {
 			for (FieldError fieldError : fieldErrors) {
 				errorMsgs.append(fieldError.getDefaultMessage()+" \t");
 			}
+
 			BaseResponse resp = new BaseResponse();
 			resp.setStatus("Error");
 			resp.setCode(HttpStatus.BAD_REQUEST.value());
