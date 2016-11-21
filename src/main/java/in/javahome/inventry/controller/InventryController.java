@@ -28,6 +28,9 @@ public class InventryController {
 	@RequestMapping(value = "/item", method = RequestMethod.POST)
 	public BaseResponse addItem(@Valid @RequestBody ItemModel item, BindingResult result) {
 		if (result.hasErrors()) {
+
+			// send error message to the client
+			System.out.println("raju.s");
 			List<FieldError> fieldErrors = result.getFieldErrors();
 			StringBuilder errorMsgs = new StringBuilder();
 			for (FieldError fieldError : fieldErrors) {
