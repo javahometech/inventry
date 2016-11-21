@@ -2,11 +2,13 @@ package in.javahome.inventry.service;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import in.javahome.inventry.entity.Item;
+import in.javahome.inventry.model.ItemModel;
 import in.javahome.inventry.repository.InventryRepository;
 import in.javahome.inventry.response.BaseResponse;
 import in.javahome.inventry.response.ListResponse;
@@ -17,15 +19,19 @@ public class InventryService implements IInventryService {
 	private InventryRepository inventRepo;
 
 	@Transactional
-	public BaseResponse addItem(Item item) {
+	public BaseResponse addItem(ItemModel item) {
 		// check for existing item
+
+		Item itmEntity = new Item();
+		BeanUtils.copyProperties(item, itmEntity);
+		
 		Item existingItem = inventRepo.findByItemName(item.getItemName());
 		if (existingItem != null) {
 			int newCount = item.getItemCount() + existingItem.getItemCount();
 			existingItem.setItemCount(newCount);
 			inventRepo.save(existingItem);
 		} else {
-			inventRepo.save(item);
+			inventRepo.save(itmEntity);
 		}
 		BaseResponse resp = new BaseResponse();
 		resp.setCode(HttpStatus.OK.value());
@@ -41,8 +47,8 @@ public class InventryService implements IInventryService {
 		resp.setStatus("Success");
 		return resp;
 	}
-	
-	public ListResponse findAllItems(){
+
+	public ListResponse findAllItems() {
 		ListResponse resp = new ListResponse();
 		resp.setCode(HttpStatus.OK.value());
 		resp.setStatus("Success");
@@ -55,7 +61,10 @@ public class InventryService implements IInventryService {
 		BaseResponse resp = new BaseResponse();
 		resp.setCode(HttpStatus.OK.value());
 		resp.setStatus("Success");
-		resp.setData(inventRepo.findOne(id));
+		Item entity = inventRepo.findOne(id);
+		ItemModel itmModel = new ItemModel();
+		BeanUtils.copyProperties(entity, itmModel);
+		resp.setData(itmModel);
 		return resp;
 	}
 }

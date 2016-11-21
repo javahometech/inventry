@@ -5,10 +5,10 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-import in.javahome.inventry.entity.Item;
+import in.javahome.inventry.model.ItemModel;
 
 @XmlRootElement
-@XmlSeeAlso({Item.class})
+@XmlSeeAlso({ItemModel.class})
 public class BaseResponse implements Serializable{
 	private int code;
 	private String errMessage = "";
