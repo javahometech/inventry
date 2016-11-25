@@ -1,5 +1,8 @@
 package in.javahome.inventry.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
@@ -52,7 +55,14 @@ public class InventryService implements IInventryService {
 		ListResponse resp = new ListResponse();
 		resp.setCode(HttpStatus.OK.value());
 		resp.setStatus("Success");
-		resp.setItems(inventRepo.findAll());
+		List<Item> itemEntityList = inventRepo.findAll();
+		List<ItemModel> itemModelList = new ArrayList<>();
+		for (Item item : itemEntityList) {
+			ItemModel itmModel = new ItemModel();
+			BeanUtils.copyProperties(item, itmModel);
+			itemModelList.add(itmModel);
+		}
+		resp.setItems(itemModelList);
 		return resp;
 	}
 
