@@ -19,7 +19,7 @@ import in.javahome.inventry.response.ListResponse;
 @Service
 public class InventryService implements IInventryService {
 	@Autowired
-	private InventryRepository inventRepo;
+	public InventryRepository inventRepo;
 
 	@Transactional
 	public BaseResponse addItem(ItemModel item) {
